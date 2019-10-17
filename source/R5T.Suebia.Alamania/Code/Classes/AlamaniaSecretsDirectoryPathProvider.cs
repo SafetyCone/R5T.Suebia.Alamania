@@ -1,0 +1,30 @@
+﻿using System;
+
+using R5T.Alamania;
+using R5T.Lombardy;
+using R5T.Ostrogothia;
+
+
+namespace R5T.Suebia.Alamania
+{
+    public class AlamaniaSecretsDirectoryPathProvider : ISecretsDirectoryPathProvider
+    {
+        public IRivetOrganizationDirectoryPathProvider RivetOrganizationDirectoryPathProvider { get; }
+        public IStringlyTypedPathOperator StringlyTypedPathOperator { get; }
+
+
+        public AlamaniaSecretsDirectoryPathProvider(IRivetOrganizationDirectoryPathProvider rivetOrganizationDirectoryPathProvider, IStringlyTypedPathOperator stringlyTypedPathOperator)
+        {
+            this.RivetOrganizationDirectoryPathProvider = rivetOrganizationDirectoryPathProvider;
+            this.StringlyTypedPathOperator = stringlyTypedPathOperator;
+        }
+
+        public string GetSecretsDirectoryPath()
+        {
+            var rivetOrganizationDirectoryPath = this.RivetOrganizationDirectoryPathProvider.GetRivetOrganizationDirectoryPath();
+
+            var secretsDirectoryPath = this.StringlyTypedPathOperator.Combine(rivetOrganizationDirectoryPath, OrganizationDirectories.DataDirectoryName, SecretsDirectory.DirectoryName);
+            return secretsDirectoryPath;
+        }
+    }
+}
