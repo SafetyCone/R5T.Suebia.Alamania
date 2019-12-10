@@ -7,6 +7,9 @@ using R5T.Ostrogothia;
 
 namespace R5T.Suebia.Alamania
 {
+    /// <summary>
+    /// Provides the Rivet/Data/Secrets directory path as the secrets directory path (usually the Rivet directory is in Dropbox) .
+    /// </summary>
     public class AlamaniaSecretsDirectoryPathProvider : ISecretsDirectoryPathProvider
     {
         public IRivetOrganizationDirectoryPathProvider RivetOrganizationDirectoryPathProvider { get; }
