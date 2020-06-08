@@ -12,31 +12,62 @@ namespace R5T.Suebia.Alamania
     public static class IServiceCollectionExtensions
     {
         /// <summary>
-        /// Adds the <see cref="AlamaniaSecretsDirectoryPathProvider"/> implementation of <see cref="ISecretsDirectoryPathProvider"/> as a <see cref="ServiceLifetime.Singleton"/>.
+        /// Adds the <see cref="RivetOrganizationSecretsDirectoryPathProvider"/> implementation of <see cref="IRivetOrganizationSecretsDirectoryPathProvider"/> as a <see cref="ServiceLifetime.Singleton"/>.
         /// </summary>
-        public static IServiceCollection AddAlamaniaSecretsDirectoryPathProvider(this IServiceCollection services,
-            ServiceAction<IRivetOrganizationDirectoryPathProvider> addRivetOrganizationDirectoryPathProvider,
-            ServiceAction<IStringlyTypedPathOperator> addStringlyTypedPathOperator)
+        public static IServiceCollection AddRivetOrganizationSecretsDirectoryPathProvider(this IServiceCollection services,
+            IServiceAction<IRivetOrganizationDirectoryPathProvider> rivetOrganizationDirectoryPathProviderAction,
+            IServiceAction<IStringlyTypedPathOperator> stringlyTypedPathOperatorAction)
         {
             services
-                .AddSingleton<ISecretsDirectoryPathProvider, AlamaniaSecretsDirectoryPathProvider>()
-                .RunServiceAction(addRivetOrganizationDirectoryPathProvider)
-                .RunServiceAction(addStringlyTypedPathOperator)
+                .AddSingleton<IRivetOrganizationSecretsDirectoryPathProvider, RivetOrganizationSecretsDirectoryPathProvider>()
+                .RunServiceAction(rivetOrganizationDirectoryPathProviderAction)
+                .RunServiceAction(stringlyTypedPathOperatorAction)
                 ;
 
             return services;
         }
 
         /// <summary>
-        /// Adds the <see cref="AlamaniaSecretsDirectoryPathProvider"/> implementation of <see cref="ISecretsDirectoryPathProvider"/> as a <see cref="ServiceLifetime.Singleton"/>.
+        /// Adds the <see cref="RivetOrganizationSecretsDirectoryPathProvider"/> implementation of <see cref="ISecretsDirectoryPathProvider"/> as a <see cref="ServiceLifetime.Singleton"/>.
         /// </summary>
-        public static ServiceAction<ISecretsDirectoryPathProvider> AddAlamaniaSecretsDirectoryPathProviderAction(this IServiceCollection services,
-            ServiceAction<IRivetOrganizationDirectoryPathProvider> addRivetOrganizationDirectoryPathProvider,
-            ServiceAction<IStringlyTypedPathOperator> addStringlyTypedPathOperator)
+        public static IServiceAction<IRivetOrganizationSecretsDirectoryPathProvider> AddRivetOrganizationSecretsDirectoryPathProviderAction(this IServiceCollection services,
+            IServiceAction<IRivetOrganizationDirectoryPathProvider> rivetOrganizationDirectoryPathProviderAction,
+            IServiceAction<IStringlyTypedPathOperator> stringlyTypedPathOperatorAction)
         {
-            var serviceAction = new ServiceAction<ISecretsDirectoryPathProvider>(() => services.AddAlamaniaSecretsDirectoryPathProvider(
-                addRivetOrganizationDirectoryPathProvider,
-                addStringlyTypedPathOperator));
+            var serviceAction = ServiceAction<IRivetOrganizationSecretsDirectoryPathProvider>.New(() => services.AddRivetOrganizationSecretsDirectoryPathProvider(
+                rivetOrganizationDirectoryPathProviderAction,
+                stringlyTypedPathOperatorAction));
+
+            return serviceAction;
+        }
+
+        /// <summary>
+        /// Forwards the <see cref="IRivetOrganizationSecretsDirectoryPathProvider"/> to the <see cref="ISecretsDirectoryPathProvider"/> service as a <see cref="ServiceLifetime.Singleton"/>.
+        /// </summary>
+        public static IServiceCollection ForwardRivetOrganizationSecretsDirectoryPathProviderAsSecretsDirectoryPathProvider(this IServiceCollection services,
+            IServiceAction<IRivetOrganizationSecretsDirectoryPathProvider> rivetOrganizationSecretsDirectoryPathProviderAction)
+        {
+            services
+                .AddSingleton<ISecretsDirectoryPathProvider>(serviceProvider =>
+                {
+                    var rivetOrganizationSecretsDirectoryPathProvider = serviceProvider.GetRequiredService<IRivetOrganizationSecretsDirectoryPathProvider>();
+                    return rivetOrganizationSecretsDirectoryPathProvider;
+                })
+                .Run(rivetOrganizationSecretsDirectoryPathProviderAction)
+                ;
+
+            return services;
+        }
+
+        /// <summary>
+        /// Forwards the <see cref="IRivetOrganizationSecretsDirectoryPathProvider"/> to the <see cref="ISecretsDirectoryPathProvider"/> service as a <see cref="ServiceLifetime.Singleton"/>.
+        /// </summary>
+        public static IServiceAction<ISecretsDirectoryPathProvider> ForwardRivetOrganizationSecretsDirectoryPathProviderAsSecretsDirectoryPathProviderAction(this IServiceCollection services,
+            IServiceAction<IRivetOrganizationSecretsDirectoryPathProvider> rivetOrganizationSecretsDirectoryPathProviderAction)
+        {
+            var serviceAction = ServiceAction<ISecretsDirectoryPathProvider>.New(() => services.ForwardRivetOrganizationSecretsDirectoryPathProviderAsSecretsDirectoryPathProvider(
+                rivetOrganizationSecretsDirectoryPathProviderAction));
+
             return serviceAction;
         }
     }
