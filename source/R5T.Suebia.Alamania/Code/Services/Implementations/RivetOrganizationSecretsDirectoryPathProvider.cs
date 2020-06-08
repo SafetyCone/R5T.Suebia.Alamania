@@ -10,13 +10,13 @@ namespace R5T.Suebia.Alamania
     /// <summary>
     /// Provides the Rivet/Data/Secrets directory path as the secrets directory path (usually the Rivet directory is in Dropbox) .
     /// </summary>
-    public class AlamaniaSecretsDirectoryPathProvider : ISecretsDirectoryPathProvider
+    public class RivetOrganizationSecretsDirectoryPathProvider : IRivetOrganizationSecretsDirectoryPathProvider
     {
         public IRivetOrganizationDirectoryPathProvider RivetOrganizationDirectoryPathProvider { get; }
         public IStringlyTypedPathOperator StringlyTypedPathOperator { get; }
 
 
-        public AlamaniaSecretsDirectoryPathProvider(IRivetOrganizationDirectoryPathProvider rivetOrganizationDirectoryPathProvider, IStringlyTypedPathOperator stringlyTypedPathOperator)
+        public RivetOrganizationSecretsDirectoryPathProvider(IRivetOrganizationDirectoryPathProvider rivetOrganizationDirectoryPathProvider, IStringlyTypedPathOperator stringlyTypedPathOperator)
         {
             this.RivetOrganizationDirectoryPathProvider = rivetOrganizationDirectoryPathProvider;
             this.StringlyTypedPathOperator = stringlyTypedPathOperator;
