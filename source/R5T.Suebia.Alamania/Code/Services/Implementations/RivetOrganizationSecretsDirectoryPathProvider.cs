@@ -2,7 +2,7 @@
 
 using R5T.Alamania;
 using R5T.Lombardy;
-using R5T.Ostrogothia;
+using R5T.Quadia;
 
 
 namespace R5T.Suebia.Alamania
@@ -26,7 +26,7 @@ namespace R5T.Suebia.Alamania
         {
             var rivetOrganizationDirectoryPath = this.RivetOrganizationDirectoryPathProvider.GetRivetOrganizationDirectoryPath();
 
-            var secretsDirectoryPath = this.StringlyTypedPathOperator.Combine(rivetOrganizationDirectoryPath, OrganizationDirectories.DataDirectoryName, SecretsDirectory.DirectoryName);
+            var secretsDirectoryPath = this.StringlyTypedPathOperator.Combine(rivetOrganizationDirectoryPath, DataDirectory.Name, SecretsDirectory.DirectoryName);
             return secretsDirectoryPath;
         }
     }
