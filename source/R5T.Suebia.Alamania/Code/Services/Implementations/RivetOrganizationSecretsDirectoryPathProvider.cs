@@ -4,13 +4,16 @@ using R5T.Alamania;
 using R5T.Lombardy;
 using R5T.Quadia;
 
+using R5T.T0064;
+
 
 namespace R5T.Suebia.Alamania
 {
     /// <summary>
     /// Provides the Rivet/Data/Secrets directory path as the secrets directory path (usually the Rivet directory is in Dropbox) .
     /// </summary>
-    public class RivetOrganizationSecretsDirectoryPathProvider : IRivetOrganizationSecretsDirectoryPathProvider
+    [ServiceImplementationMarker]
+    public class RivetOrganizationSecretsDirectoryPathProvider : IRivetOrganizationSecretsDirectoryPathProvider, IServiceImplementation
     {
         public IRivetOrganizationDirectoryPathProvider RivetOrganizationDirectoryPathProvider { get; }
         public IStringlyTypedPathOperator StringlyTypedPathOperator { get; }

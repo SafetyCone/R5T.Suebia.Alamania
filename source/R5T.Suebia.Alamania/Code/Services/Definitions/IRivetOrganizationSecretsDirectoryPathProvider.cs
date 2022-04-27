@@ -1,9 +1,12 @@
 ﻿using System;
 
+using R5T.T0064;
+
 
 namespace R5T.Suebia.Alamania
 {
-    public interface IRivetOrganizationSecretsDirectoryPathProvider : ISecretsDirectoryPathProvider
+    [ServiceDefinitionMarker]
+    public interface IRivetOrganizationSecretsDirectoryPathProvider : ISecretsDirectoryPathProvider, IServiceDefinition
     {
     }
 }
